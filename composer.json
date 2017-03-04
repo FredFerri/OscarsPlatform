@@ -1,0 +1,24 @@
+{
+    "name": "fred/oscars2",
+    "authors": [
+        {
+            "name": "fred",
+            "email": "ferri.frederic@yahoo.fr"
+        }
+    ],
+    "type": "project",
+    "require": {
+        "vlucas/spot2": "^2.2",
+        "symfony/console": "^3.2",
+        "doctrine/orm": "^2.5",
+        "symfony/yaml": "^3.2",
+        "twig/twig": "^1.31"
+    },
+    "autoload": {
+      "psr-4": {
+        "Components\\": "components/",
+        "Controllers\\": "controllers/",
+        "Models\\": "models/"
+	}
+    }
+}

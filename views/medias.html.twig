@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!--main-container-part-->
+    <div id="content">
+
+        <!--Action boxes-->
+        <div class="container-fluid container_media_page">
+            <div class="row-fluid">
+
+
+                <form action="/addmedia" method="post" class="mediaAddForm">
+                    <!-- Zone d'upload d'image -->
+                    <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div>
+                    <!-- Autres champs du formulaire d'ajout d'image -->
+                    <table style="display: none" id="mediaForm" class="table table-bordered table_userslist">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr><th>Titre</th><td><input id="title" type="text" required></td></tr>
+                            <tr><th>Description</th><td><input id="description" type="text" required></td></tr>
+                            <tr><th>Date</th><td><input id="date" type="date" placeholder="jj/mm/aaaa" required></td></tr>
+                            <tr><th>Lieu</th><td><input id="place" type="text" required></td></tr>
+                        </tbody>
+                    </table>
+                    <input style="display: none" class="submit editMediaSubmit" type="submit" name="addMedia" id="addMedia"/>
+                    <button style="display: none" value="Annuler" id="cancel_btn">Annuler</button>
+                    <div id="form-title"></div>
+                </form>
+            </div>
+
+            <!-- Affichage des images -->
+
+            <div class="media_page widget-content collapse in" id="collapseG2">
+                {% for media in listMedias %}
+                    <figure class="pic">
+                        <!-- Si l'image en question a été uploadé par l'internaute, on affiche les bouttons d'édition et de suppression de l'image -->
+                        {% if session.id == media.user_id %}
+                            <a href="#" class="edit_btn" id="{{ media.id }}"><i class="icon-edit"></i></a>
+                            <a href="#" id="remove_btn" onclick="return deleteMedia(this);"><i id="{{ media.id }}" class="icon-remove"></i></a>
+                        {% endif %}
+                        <img class="img-responsive" src="{{ media.URI }}" alt="Short alt text">
+                        <figcaption><a class="fancybox" rel="group" href="{{ media.URI }}" caption="{{ media.title }}"><p class="pic_title">{{ media.title }}</p><p class="pic_date">{{ media.date|date('d-m-Y') }}</p><p class="pic_place">{{ media.place }}</p></a></figcaption>
+                    </figure>
+
+                    <!-- Formulaire d'édition -->
+                    {% if session.id == media.user_id %}
+                        <form action="/editmedia/:{{ media.id }}" method="post" class="mediaEditForm" id="mediaEditForm_{{ media.id }}" style="display: none">
+                            <table id="mediaEditTab" class="table table-bordered table_userslist">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr><th>Titre</th><td><input name="title" id="title" type="text" class="" value="{{ media.title }}" required></td></tr>
+                                <tr><th>Description</th><td><input name="description" id="description" type="text" value="{{ media.description }}" required></td></tr>
+                                <tr><th>Date</th><td><input name="date" id="date" type="date" placeholder="jj/mm/aaaa" value="{{ media.date|date('d-m-Y') }}" required></td></tr>
+                                <tr><th>Lieu</th><td><input name="place" id="place" type="text" value="{{ media.place }}" required></td></tr>
+                                </tbody>
+
+                            </table>
+
+                            <input style="display: none" class="submit editMediaSubmit" type="submit" id="editMedia_{{ media.id }}"/>
+                            <button style="display: none" value="Annuler" class="cancel_edit_btn" id="cancel_edit_btn_{{ media.id }}">Annuler</button>
+                            <div id="form-title"></div>
+
+                        </form>
+                    {% endif %}
+
+
+                {% endfor %}
+            </div>
+
+            <!-- Bouttons de changement de page -->
+            <div class="pagination_block">
+                {% if first_page != true %}
+                    {% set previousPage = page_id - 1 %}
+                    <div class="pagination"><a class="1" id="previous_page" href="/media/page/:{{ previousPage }}" onclick="return pagination(this)"><i class="icon-chevron-left"></i></a></div>
+                {% endif %}
+                {% if last_page != true %}
+                    {% set nextPage = page_id + 1 %}
+                    <div class="pagination"><a class="1" id="next_page" href="/media/page/:{{ nextPage }}" onclick="return pagination(this)"><i class="icon-chevron-right"></i></a></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".active").toggleClass('active');
+            $("#btn_medias").toggleClass('active');
+        })
+    </script>
+
+
+
+{% endblock %}

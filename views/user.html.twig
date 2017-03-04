@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="content">
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                            <h5>{{ userInfos.name }}</h5>
+                        </div>
+                        <div class="widget-content collapse in" id="collapseG2">
+                            <div id="form-title" style="display: none;"></div>
+                            <form class="userEditForm" id="userForm" onsubmit="return userFormSubmit();">
+                            <table class="table table-bordered table_userslist">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><th>Photo de profil</th><td><input id="picture" type="file"><img class="profilpic_list" src="{{ userInfos.picture }}"></td></tr>
+                                    <tr><th>Pseudo</th><td><input id="name" type="text" value="{{ userInfos.name }}"></td></tr>
+                                    <tr><th>Adresse mail</th><td><input id="email" type="email" value="{{ userInfos.email }}"></td></tr>
+                                    <tr><th>Dernier classement</th><td><input id="last_classement" type="number" value="{{ userInfos.last_classement }}"></td></tr>
+                                    <tr><th>Statut</th><td><input id="statut" type="text" value="{{ userInfos.statut }}"></td></tr>
+                                    <tr><th>Mot de passe</th><td><input id="password" type="password" value="{{ userInfos.password }}"></td></tr>
+                                    <!-- Si l'internaute est un Admin, on affiche le champ d'édition de profil -->
+                                    {% if session.profile == 1 %}<tr><th>Droits</th><td>
+                                            <select name="profile" id="profile">
+                                                {% for profile in listProfiles|reverse %}
+                                                    {% if profile.id == userInfos.profile.id %}
+                                                        <option value="{{ profile.id }}" selected="selected">{{ profile.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ profile.id }}">{{ profile.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr style="display: none;"><input style="display: none;" id="id" type="password" value="{{ userInfos.id }}"></tr>
+                                </tbody>
+                            </table>
+
+                            <button class="button" type="submit" name="addUser" id="addUser">Valider</button>
+                                <!-- Image de chargement (upload) -->
+                                <div style="display: none" class="windows8" id="loading_animation">
+                                    <div class="wBall" id="wBall_1">
+                                        <div class="wInnerBall"></div>
+                                    </div>
+                                    <div class="wBall" id="wBall_2">
+                                        <div class="wInnerBall"></div>
+                                    </div>
+                                    <div class="wBall" id="wBall_3">
+                                        <div class="wInnerBall"></div>
+                                    </div>
+                                    <div class="wBall" id="wBall_4">
+                                        <div class="wInnerBall"></div>
+                                    </div>
+                                    <div class="wBall" id="wBall_5">
+                                        <div class="wInnerBall"></div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".active").toggleClass('active');
+        })
+    </script>
+
+    <!--end-main-container-part-->
+
+{% endblock %}
+

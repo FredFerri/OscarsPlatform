@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="content">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                            <h5>Utilisateurs</h5>
+                        </div>
+                        <div class="widget-content collapse in" id="collapseG2">
+                            <table class="table table-bordered table_userslist">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Pseudo</th>
+                                        <th>Statut</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in listUsers %}
+                                        <tr>
+                                            <td><a href="/user/{{ user.id }}" ><img class="profilpic_list" src="{{ user.picture }}"></a></td>
+                                            <td><a href="/user/{{ user.id }}" >{{ user.name }}</a></td>
+                                            <td><a href="/user/{{ user.id }}" >{{ user.statut }}</a></td>
+                                            <td><a href="#" id="remove_btn" title="Supprimer cet utilisateur" onclick="return deleteUser(this)"><i id="{{ user.id }}" class="icon-remove"></i></a></td>
+                                        </tr></a>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

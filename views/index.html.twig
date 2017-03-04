@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="content" class="page_wall">
+
+        <div class="container-fluid wall_container">
+            <div class="row-fluid">
+                <textarea id="post_content" placeholder="Tapez votre message..."></textarea>
+                <ul class="recent-posts" id="posts_list">
+                    {% for post in listPosts|reverse %}
+                        <li class="wall_rows" id="{{ post.id }}">
+                            <div class="user-thumb">
+                                <img src="{{ post.author.picture }}">
+                            </div>
+                            <div class="post_block">
+                                <span class="user-info"><span class="user_pseudo">{{ post.author.name }}</span> / <span class="user_date">{{ post.date|date('d-m-Y\\ à H:i') }}</span></span>
+                                <p class="post_content_txt">{{ post.content|nl2br }}</p>
+                                <textarea id="newContent_{{ post.id }}" style="display: none">{{ post.content|nl2br }}</textarea>
+                            </div>
+                            {% if session.id == post.author.id %}
+                                <div class="buttons_block" style="display: none; height: auto; vertical-align: middle;">
+                                    <div><a href="#" id="edit_btn_{{ post.id }}" class="{{ post.id }}" title="Modifier" onclick="return editPost(this)"><i class="icon-edit"></i></a></div>
+                                    <div><a href="#" id="remove_btn" class="{{ post.id }}" title="Supprimer ce post" onclick="return deletePost(this)"><i id="/deletepost/:{{ post.id }}" class="icon-remove"></i></a></div>
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="pagination_block">
+                        <div style="display: none" class="pagination"><a class="1" id="previous_page" href="#" onclick="return pagination(this)"><i class="icon-chevron-left"></i></a></div>
+                        <div class="pagination"><a class="1" id="next_page" href="#" onclick="return pagination(this)"><i class="icon-chevron-right"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            truncatePost();
+        })
+
+
+    </script>
+
+
+{% endblock %}

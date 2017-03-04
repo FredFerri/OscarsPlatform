@@ -1,0 +1,20 @@
+<div class="form-style-10" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <h1 id="form-title">Inscription<span>Remplis ça en go fast</span></h1>
+    <form method="post" class="userAddForm" id="userForm" onsubmit="return userFormSubmit();">
+        <div class="inner-wrap">
+            <label>Pseudo *<input id="name" type="text" name="name" class="required" /></label>
+            <label>Password *<input id="password" type="password" name="password" class="required"></label>
+            <label>Adresse email <input id="email" type="email" name="email" /></label>
+            <label>Classement lors de la dernière édition des oscars <input id="last_classement" type="text" name="last_classement" /></label>
+            <label>Statut <textarea id="statut" name="statut"></textarea></label>
+            <label>Photo de profil (max: 1Mo)<input id="picture" type="file" name="files[]" data-url="server/php/"><img class="profilpic_list" src=""></label>
+        </div>
+        <div class="button-section">
+            <input type="submit" name="addUser" id="addUser" />
+        </div>
+    </form>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="../assets/js/blueimp-jQuery-File-Upload-b61ef97/js/vendor/jquery.ui.widget.js"></script>
+<script src="../assets/js/blueimp-jQuery-File-Upload-b61ef97/js/jquery.iframe-transport.js"></script>
+<script src="../assets/js/blueimp-jQuery-File-Upload-b61ef97/js/jquery.fileupload.js"></script>

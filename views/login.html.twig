@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+        <title>Matrix Admin</title><meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="../assets/css/matrix-login.css" />
+        <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../assets/css/morphing.css" />
+        <link href="../assets/css/styles.css" rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
+    </head>
+    <body>
+    <!-- Page d'authentification -->
+    <div id="content" class="page_login cd-section">
+        <div id="loginbox">
+            <form id="loginform" class="form-vertical">
+				 <div class="control-group normal_text"> <h3><img src="../medias/images/logo.png" alt="Logo" /></h3></div>
+                <div id="login_error" style="display: none; color: red; text-align: center">Mauvais pseudo ou mot de passe</div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"> </i></span><input id="pseudo_login" type="text" placeholder="Pseudo" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ly"><i class="icon-lock"></i></span><input id="password_login" type="password" placeholder="Mot de passe" onfocus="return submitForm(this)"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <span class="pull-right"><a type="submit" class="btn btn-success" onclick="return login()">Se connecter</a></span>
+                    <div class="cd-modal-action pull-leftmodal-action">
+                        <a href="#0" class="btn btn-info" id="btn_register" data-toggle="modal" data-type="modal-trigger" data-target="#modal_auth">Créer un compte</a>
+                        <span class="cd-modal-bg"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal d'inscription -->
+        <div id="modal_register" class="cd-modal">
+            <div class="cd-modal-content">
+                <a class="icon-3x icon-close cd-modal-close" href="#"></a>
+                <h2 id="form-title">Inscription</h2>
+                <form method="post" class="userAddForm" id="userForm">
+                    <div class="inner-wrap">
+                        <div><label><p>Pseudo *</p><input id="name" type="text" name="name" class="required" /></label></div>
+                        <div><label><p>Password *</p><input id="password" type="password" name="password" class="required"></label></div>
+                        <div><label><p>Photo de profil (max: 2Mo)</p><input id="picture" type="file" name="files[]" data-url="server/php/"></label></div>
+                        <div class="button-section">
+                            <input class="btn_registration" value="Valider" type="button" name="addUser" id="addUser" onclick="return userFormSubmit()"/>
+
+                            <!-- Image de chargement (upload) -->
+                            <div style="display: none" class="windows8" id="loading_animation">
+                                <div class="wBall" id="wBall_1">
+                                    <div class="wInnerBall"></div>
+                                </div>
+                                <div class="wBall" id="wBall_2">
+                                    <div class="wInnerBall"></div>
+                                </div>
+                                <div class="wBall" id="wBall_3">
+                                    <div class="wInnerBall"></div>
+                                </div>
+                                <div class="wBall" id="wBall_4">
+                                    <div class="wInnerBall"></div>
+                                </div>
+                                <div class="wBall" id="wBall_5">
+                                    <div class="wInnerBall"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/matrix.login.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/modernizr.js"></script>
+    <script src="../assets/js/velocity.min.js"></script>
+    <script src="../assets/js/morphing.js"></script>
+    <script src="../assets/js/ajaxFunctions.js"></script>
+    </body>
+
+</html>
