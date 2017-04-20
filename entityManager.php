@@ -14,8 +14,8 @@ function getEntityManager() {
 // database configuration parameters
     $conn = array(
         'dbname' => 'oscars',
-        'user' => 'root',
-        'password' => 'kingston',
+        'user' => '',
+        'password' => '',
         'host' => 'localhost',
         'driver' => 'pdo_mysql',
         'path' => __DIR__ . '/db.mysql',

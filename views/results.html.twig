@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="content">
+
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                                <h5>Résultats du sondage "{{ poll.name }}"</h5>
+                            </div>
+
+                            <div class="widget-content collapse in">
+                                    <input type="hidden" value="{{ poll.id }}" name="poll_id">
+                                    {% for question in listQuestions %}
+                                        {% if question.id_type.id != 3 %}
+                                        <div id="question_mainblock_{{ loop.index }}" class="question_mainblock">
+                                            <label class="question_title">Question {{ loop.index }}</label>
+                                            <p id="fill_question_{{ question.id }}" class="fill_question">{{ question.content }}</p>
+                                                <div class="fill_answer_block">
+                                                    <ul class="fill_answer_list">
+                                                        {% for answer in listAnswers[loop.index0] %}
+                                                            <p style="display: block;">{{ answer.content }} = <span class="alert-danger">{{ answer.votes }} voix</span></p>
+                                                            <div class="progress progress-success">
+                                                                <div class="bar" style="width: {{ answer.progressbar }}%">{{ answer.progressbar }}%</div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".active").toggleClass('active');
+        })
+    </script>
+
+    <!--end-main-container-part-->
+
+{% endblock %}
+

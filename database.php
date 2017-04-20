@@ -3,8 +3,8 @@
 function loadDB() {
     $database = 'oscars';
     $host = 'localhost';
-    $user = 'root';
-    $pwd = 'kingston';
+    $user = '';
+    $pwd = '';
 
     $connect = mysqli_connect($host, $user, $pwd, $database);
     if (mysqli_connect_error()) {

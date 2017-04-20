@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="content">
+        <div class="container-fluid">
+            {% if session.profile == 1 %}
+                <ul class="quick-actions" style="text-align: center;">
+                    <li class="bg_lg span3" style="float: none; margin: auto">
+                        <a href="/addPollPage">
+                            <i class="icon-signal"></i>
+                            Créer un nouveau sondage
+                        </a>
+                    </li>
+                </ul>
+            {% endif %}
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                            <h5>Sondages</h5>
+                        </div>
+                        <div class="widget-content collapse in" id="collapseG2">
+                            <div class="widget-box">
+                                {% for poll in listPolls %}
+                                    <div class="new-update clearfix polls_list" style="position: relative">
+                                        <div class="update-done" style="float: none">
+                                            <a title="" href="/fillpoll/{{ poll.id }}">
+                                                <strong>{{ poll.name }}</strong>
+                                            </a>
+                                            <span>{{ poll.description }}</span>
+                                            {% if session.profile == 1 %}
+                                                <div class="poll_edit" style="position: absolute; top: 30%; right: 3%; display: none;">
+                                                    <a href="/results/{{ poll.id }}">Voir les résultats</a>
+                                                </div>
+                                                <div class="poll_edit" style="position: absolute; top: 30%; right: 1%; display: none;">
+                                                    <a id="{{ poll.id }}" href="#"  onclick="return deletePoll(this)">X</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

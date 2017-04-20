@@ -1,10 +1,13 @@
 <?php
 
+<<<<<<< HEAD
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+=======
+>>>>>>> aa7a4af3eb8446c01d8243335fd26de59f89b349
 require_once "vendor/autoload.php";
 
 

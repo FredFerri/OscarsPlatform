@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="content">
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                            <h5>Nouveau sondage</h5>
+                        </div>
+                        <div class="widget-content collapse in" id="collapseG2">
+                            <div id="form-title" style="display: none;"></div>
+                            <label for="new_poll">Titre</label> <input id="new_poll" type="text" required>
+                            <label for="new_poll_desc">Description (facultatif)</label> <input id="new_poll_desc" type="text">
+                            <button class="btn-success" value="" onclick="return insertNewQuestion(1);" style="display: block;">Créer un nouveau sondage</button>
+                        </div>
+                        <div class="widget-content collapse in">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".active").toggleClass('active');
+        })
+    </script>
+
+    <!--end-main-container-part-->
+
+{% endblock %}
+
