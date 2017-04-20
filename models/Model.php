@@ -56,6 +56,29 @@ class Model {
         }
     }
 
+    public function getQuestionsByPoll($poll_id) {
+        $class = 'Models\Questions';
+        $em = getEntityManager();
+        if ($entity = $em->getRepository($class)->findBy(array('id_poll' => $poll_id))) {
+            return $entity;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function getAnswersByQuestion($question_id) {
+        $class = 'Models\Answers';
+        $em = getEntityManager();
+        if ($entity = $em->getRepository($class)->findBy(array('id_question' => $question_id))) {
+            return $entity;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 }
 
 

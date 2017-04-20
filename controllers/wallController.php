@@ -39,7 +39,7 @@ class wallController extends controller
             //
             $twig = $this->loadTwig();
             $template = $twig->load('index.html.twig');
-            echo $template->render(array('listPosts' => $listPosts, 'pagesNumber' => $pagesNumber, 'session' => $_SESSION));
+            echo $template->render(array('listPosts' => $listPosts, 'pagesNumber' => $pagesNumber, 'session' => $_SESSION, 'nbrPosts' => $totalNumber));
         }
     }
 
@@ -47,8 +47,7 @@ class wallController extends controller
     {
         session_start();
         $db = loadDB();
-        $content = mysqli_real_escape_string($db, $_POST['content']);
-        $content = str_replace('\r\n','<br>',$content);
+        $content = addslashes($_POST['content']);
         $date = date('Y-m-d H:i:s');
         $date = new \DateTime($date);
         $author_id = $_SESSION['id'];
@@ -64,7 +63,7 @@ class wallController extends controller
             $publication->editPublication();
             $author = $publication->getAuthor();
             $post_id = $publication->getId();
-            echo json_encode(array('content' => $content, 'date' => $publication->getDate(), 'name' => $author->getName(), 'picture' => $author->getPicture(),
+            echo json_encode(array('content' => stripslashes($content), 'date' => $publication->getDate(), 'name' => $author->getName(), 'picture' => $author->getPicture(),
                 'author_id' => $author_id, 'post_id' => $post_id));
         }
         else {

@@ -24,6 +24,7 @@ class indexController extends controller {
             $template = $twig->load('login.html.twig');
             echo $template->render(array('moteur_name' => 'Twig'));
         }
+
     }
 
     public function login()

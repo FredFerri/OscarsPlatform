@@ -4,6 +4,14 @@
 
     <div id="content" class="page_wall">
 
+        {% if sucess_message %}
+            <div class="alert alert-success alert-block">
+                <a class="close" data-dismiss="alert" href="#">×</a>
+                <h4 class="alert-heading">{{ success_message.title }}</h4>
+                {{ success_message.subtitle }}
+            </div>
+        {% endif %}
+
         <div class="container-fluid wall_container">
             <div class="row-fluid">
                 <textarea id="post_content" placeholder="Tapez votre message..."></textarea>
@@ -15,8 +23,8 @@
                             </div>
                             <div class="post_block">
                                 <span class="user-info"><span class="user_pseudo">{{ post.author.name }}</span> / <span class="user_date">{{ post.date|date('d-m-Y\\ à H:i') }}</span></span>
-                                <p class="post_content_txt">{{ post.content|nl2br }}</p>
-                                <textarea id="newContent_{{ post.id }}" style="display: none">{{ post.content|nl2br }}</textarea>
+                                <p class="post_content_txt">{{ post.content|striptags|nl2br }}</p>
+                                <textarea id="newContent_{{ post.id }}" style="display: none">{{ post.content|striptags|nl2br }}</textarea>
                             </div>
                             {% if session.id == post.author.id %}
                                 <div class="buttons_block" style="display: none; height: auto; vertical-align: middle;">
@@ -27,10 +35,12 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <div class="pagination_block">
-                        <div style="display: none" class="pagination"><a class="1" id="previous_page" href="#" onclick="return pagination(this)"><i class="icon-chevron-left"></i></a></div>
-                        <div class="pagination"><a class="1" id="next_page" href="#" onclick="return pagination(this)"><i class="icon-chevron-right"></i></a></div>
-                </div>
+                {% if nbrPosts >= 11 %}
+                    <div class="pagination_block">
+                            <div style="display: none" class="pagination"><a class="1" id="previous_page" href="#" onclick="return pagination(this)"><i class="icon-chevron-left"></i></a></div>
+                            <div class="pagination"><a class="1" id="next_page" href="#" onclick="return pagination(this)"><i class="icon-chevron-right"></i></a></div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

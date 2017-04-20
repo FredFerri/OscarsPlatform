@@ -8,6 +8,9 @@ var deleteMediaURL = 'http://' + host + '/delmedia/';
 var editPostURL = 'http://' + host + '/editpost/';
 var loginURL = 'http://' + host + '/login';
 var deleteUserURL = 'http://' + host + '/deluser/';
+var deletePollURL = 'http://' + host + '/delpoll/';
+var addPoll = 'http://' + host + '/addPoll';
+
 
 var pageName = document.getElementById('content');
 pageName = pageName.className;
@@ -332,9 +335,6 @@ $('.cancel_edit_btn').click(function (e) {
 if (pageName == 'page_wall') {
     var wallInput = document.getElementById("post_content");
     wallInput.addEventListener("keydown", function (e) {
-        if (e.keyCode === 13 && e.shiftKey) {
-            this.value += "\n";
-        }
 
         if (e.keyCode === 13 && !e.shiftKey) {
             var content = wallInput.value;
@@ -776,6 +776,178 @@ $('#btn_register').click(function() {
         $("#loginbox").toggle();
     },800);
 });
+
+function insertNewAnswer(counter) {
+    var answer_counter = ++counter;
+    var answerBlock = document.createElement('div');
+    answerBlock.className = 'answer_block';
+    var labelAnswer = answerBlock.appendChild(document.createElement('label'));
+    labelAnswer.innerText = 'Réponse '+answer_counter;
+    var answer = answerBlock.appendChild(document.createElement('textarea'));
+    answer.type = 'text';
+    answer.className = 'answer';
+    answer.id = 'answer_'+answer_counter;
+    var addAnswerDiv = answerBlock.appendChild(document.createElement('div'));
+    var addAnswer= addAnswerDiv.appendChild(document.createElement('a'));
+    addAnswer.className = 'addanswer btn';
+    addAnswer.innerText = 'Ajouter une réponse';
+    addAnswer.onclick = function() {
+        this.parentNode.parentNode.parentNode.appendChild(insertNewAnswer(answer_counter));
+        this.style.display = 'none';
+    };
+
+    return answerBlock;
+}
+
+
+
+/* SONDAGES */
+
+/* Animation lors du changement de type de question */
+function questionTypeToggle(elmnt) {
+    var blockId = elmnt.parentNode.id;
+    $('#'+blockId+' .answer_block').toggle();
+}
+
+/* Affichage message avant suppression du sondage */
+function deletePollForm(elmnt) {
+    var el = elmnt.parentNode;
+    while ( el.firstChild ) el.removeChild( el.firstChild );
+    el.style.display = 'none';
+}
+
+/* Ajout d'une nouvelle question */
+function insertNewQuestion(iter) {
+    var id = iter;
+    var mainBlock = document.createElement('div');
+    mainBlock.className = 'question_mainblock';
+    mainBlock.id = 'question_mainblock_'+id;
+    var deleteBtn = mainBlock.appendChild(document.createElement('a'));
+    deleteBtn.innerText = 'X';
+    deleteBtn.className = 'poll_close_btn btn-large';
+    deleteBtn.onclick = function() {deletePollForm(this);};
+    var labelQuestion = mainBlock.appendChild(document.createElement('label'));
+    labelQuestion.innerText = 'Question '+id;
+    var question = mainBlock.appendChild(document.createElement('textarea'));
+    question.className = "question";
+    question.id = 'question_'+id;
+    question.rows = 4;
+    var type = mainBlock.appendChild(document.createElement('select'));
+    type.className = 'question_type';
+    type.onchange = function () {questionTypeToggle(this);};
+    var typeOption1 = type.appendChild(document.createElement('option'));
+    typeOption1.value = 1;
+    typeOption1.innerText = 'QCM';
+    var typeOption3 = type.appendChild(document.createElement('option'));
+    typeOption3.value = 3;
+    typeOption3.innerText = 'Réponse libre';
+    mainBlock.appendChild(insertNewAnswer(0));
+    if (iter != 1) {
+        var linksList = document.getElementsByClassName('addquestion');
+        for (var i=0; i < linksList.length; i++) {
+            linksList[i].style.display = 'none';
+        }
+    }
+    else {
+        var submitBtn = document.getElementById('collapseG2').parentNode.parentNode.appendChild(document.createElement('btn'));
+        submitBtn.className = "btn-large btn-success";
+        submitBtn.id = "submit_poll";
+        submitBtn.innerText = "Enregistrer le sondage";
+        submitBtn.onclick = function() {addNewPoll();};
+    }
+    var addQuestionDiv = document.createElement('div');
+    var addQuestion = addQuestionDiv.appendChild(document.createElement('a'));
+    addQuestion.className = 'addquestion btn-large';
+    addQuestion.innerText = 'Ajouter une question';
+    addQuestion.onclick = function () {insertNewQuestion(++id)};
+    document.getElementById('collapseG2').appendChild(mainBlock);
+    document.getElementById('collapseG2').appendChild(addQuestionDiv);
+}
+
+function emptyElement(element) {
+    //Removes nulls, zeros (also falses), text version of false, and blank element
+    if (element == null || element == 0 || element.toString().toLowerCase() == 'false' || element == '')
+        return false;
+    else return true;
+}
+
+/* Ajout d'un nouveau sondage */
+function addNewPoll() {
+
+    if (document.getElementById('new_poll').value) {
+        var pollname = document.getElementById('new_poll').value;
+    }
+    else {
+        alert("Veuillez donner un nom à votre sondage");
+        return false;
+    }
+    var polldesc = document.getElementById('new_poll_desc').value;
+    var listQuestions = document.getElementsByClassName('question_mainblock');
+    var questions = [];
+    var questions_type = [];
+    var answers = [];
+
+    for (var i =0; i < listQuestions.length; i++) {
+        answers[i] = new Array();
+        for (var y=0; y < listQuestions[i].childNodes.length; y++) {
+            if (listQuestions[i].childNodes[y].className == 'question') {
+                questions[i] = listQuestions[i].childNodes[y].value + ';';
+            }
+            else if (listQuestions[i].childNodes[y].className == 'question_type') {
+                questions_type[i] = listQuestions[i].childNodes[y].value;
+            }
+            else if (listQuestions[i].childNodes[y].className == 'answer_block') {
+                answers[i][y] = listQuestions[i].childNodes[y].childNodes[1].value + ';';
+
+            }
+
+        }
+    }
+    answers = answers.filter(emptyElement);
+
+    var xhr = getXMLHttpRequest();
+    var form = new FormData();
+    form.append('pollname', pollname);
+    form.append('polldesc', polldesc);
+    form.append('questions', questions);
+    form.append('questions_type', questions_type);
+    form.append('answers', answers);
+    xhr.open("POST", addPoll, true);
+    xhr.send(form);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+            if (xhr.responseText == 'OK') {
+                location.href = "/polls";
+            }
+            else {
+                alert('Erreur');
+            }
+        }
+    }
+}
+
+function deletePoll(elmnt) {
+    var poll_id = elmnt.id;
+    swal({
+        title: "Êtes vous sûr de vouloir supprimer cet élément ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#27a9e3",
+        confirmButtonText: "Oui",
+        cancelButtonText: "Annuler",
+        closeOnConfirm: true,
+        html: false
+    }, function(){
+        window.location.replace(deletePollURL+':'+poll_id);
+    })
+}
+
+
+
+
+
+
 
 
 

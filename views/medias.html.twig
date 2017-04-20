@@ -45,7 +45,7 @@
                             <a href="#" id="remove_btn" onclick="return deleteMedia(this);"><i id="{{ media.id }}" class="icon-remove"></i></a>
                         {% endif %}
                         <img class="img-responsive" src="{{ media.URI }}" alt="Short alt text">
-                        <figcaption><a class="fancybox" rel="group" href="{{ media.URI }}" caption="{{ media.title }}"><p class="pic_title">{{ media.title }}</p><p class="pic_date">{{ media.date|date('d-m-Y') }}</p><p class="pic_place">{{ media.place }}</p></a></figcaption>
+                        <figcaption><a class="fancybox" rel="group" href="{{ media.URI }}" caption="{{ media.title }}"><p class="pic_title">{{ media.title }}</p><p class="pic_desc">{{ media.description }}</p><p class="pic_date">{{ media.date|date('d-m-Y') }}</p><p class="pic_place">{{ media.place }}</p></a></figcaption>
                     </figure>
 
                     <!-- Formulaire d'édition -->

@@ -12,6 +12,17 @@ body {
     font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }
 
+/* Login page */
+
+.btn_connection {
+    display: block;
+    margin:15px auto;
+}
+
+.form-actions {
+    text-align: center;
+}
+
 /* Forms */
 
 
@@ -119,6 +130,10 @@ form input {
 
 .media_page figure .icon-remove {
     color: red;
+}
+
+.pic_desc {
+    font-size: 14px; font-style: italic;
 }
 
 
@@ -387,6 +402,64 @@ form input {
     -moz-animation-delay: 0.743s;
 }
 
+/* Polls */
+
+.question_mainblock {
+    border-bottom: 1px dashed #969ea7;
+    margin: 55px auto;
+    padding-bottom: 45px;
+}
+
+.question_mainblock textarea {
+    width: 35%;
+}
+
+.btn-large {
+    cursor: pointer;
+}
+
+#submit_poll, #btnFillSubmit {
+    float: right;
+}
+
+.poll_close_btn {
+    float: right;
+    cursor: pointer;
+    position: relative;
+    top: -30px;
+}
+
+.question_type {
+    margin-left: 15px;
+    vertical-align: top;
+}
+
+.fill_answer_list {
+    margin: 0;
+}
+
+.fill_answer_list li {
+    list-style: none;
+    text-decoration: none;
+}
+
+.fill_question {
+    font-size: 15px;
+    font-style: italic;
+}
+
+.fill_answer_list label {
+    font-size: 13px !important;
+}
+
+.question_title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.polls_list:hover > .update-done .poll_edit {
+    display: inline-block !important;
+}
 
 
 @keyframes orbit {

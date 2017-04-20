@@ -82,7 +82,11 @@ class mediasController extends controller
 
             $request = ['title' => $title, 'description' => $description, 'date' => $date, 'place' => $place];
 
+
             /* Transfert du fichier vers le serveur */
+
+
+
 
             $ds          = DIRECTORY_SEPARATOR;
 
